@@ -8,11 +8,10 @@ export default function CreateDeckPage() {
   const [deckName, setDeckName] = useState('');
   const [avgElixir, setAvgElixir] = useState(0);
   const [searchTerm, setSearchTerm] = useState('');
-  const [isSaving, setIsSaving] = useState(false); // State untuk loading save
+  const [isSaving, setIsSaving] = useState(false); 
   const router = useRouter();
 
   useEffect(() => {
-    // Cek apakah ada sesi user tersimpan
     const user = localStorage.getItem('user');
     if (!user) {
         router.push('/login');
@@ -57,7 +56,7 @@ export default function CreateDeckPage() {
     }
     const user = JSON.parse(userStr);
 
-    setIsSaving(true);
+    setIsSaving(true); 
 
     try {
       const res = await fetch('/api/decks', {
@@ -76,7 +75,7 @@ export default function CreateDeckPage() {
       if (res.ok) {
         router.push('/profile');
       } else {
-        console.error("Error API:", result);
+        console.error(result);
         alert(`Gagal menyimpan: ${result.error || "Terjadi kesalahan server."}`);
       }
     } catch (error) {
@@ -93,7 +92,6 @@ export default function CreateDeckPage() {
 
   return (
     <div className="row g-4">
-      {/* PANEL KIRI */}
       <div className="col-lg-4 mb-3">
         <div className="card shadow border-0 rounded-4 sticky-top" style={{top: '100px', zIndex: 100}}>
             <div className="card-body p-4">
@@ -156,7 +154,6 @@ export default function CreateDeckPage() {
         </div>
       </div>
 
-      {/* GRID KARTU */}
       <div className="col-lg-8">
         <div className="card-scroll-area shadow-sm">
             <div className="d-flex justify-content-between align-items-center bg-white p-2 border-bottom sticky-top mb-3">

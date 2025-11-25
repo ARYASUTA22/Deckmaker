@@ -27,35 +27,31 @@ export async function GET(request: Request) {
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    const { name, cardData, averageElixir, username } = body; // Kita pakai username sekarang
+    const { name, cardData, averageElixir, username } = body; 
 
     if (!username || !name) {
         return NextResponse.json({ error: 'Data tidak lengkap' }, { status: 400 });
     }
 
-    // LOGIKA SELF-HEALING:
-    // Alih-alih langsung pakai ID yang mungkin salah, kita pastikan User ada berdasarkan username.
-    // Jika user hilang dari DB, ini akan otomatis membuatnya lagi (Upsert).
     const user = await prisma.user.upsert({
         where: { username: username },
-        update: {}, // Tidak ada yang diupdate jika user ada
-        create: { username: username }, // Buat baru jika tidak ada
+        update: {}, 
+        create: { username: username }, 
     });
 
-    // Sekarang kita punya user.id yang PASTI VALID dari database baru
     const newDeck = await prisma.deck.create({
       data: {
         name,
         cards: JSON.stringify(cardData),
         averageElixir: parseFloat(averageElixir), 
-        userId: user.id, // Gunakan ID asli dari database
+        userId: user.id, 
       },
     });
 
     return NextResponse.json(newDeck);
 
   } catch (error: any) {
-    console.error("❌ ERROR SAVE DECK:", error); 
+    console.error(error); 
     return NextResponse.json({ error: 'Gagal menyimpan deck.' }, { status: 500 });
   }
 }

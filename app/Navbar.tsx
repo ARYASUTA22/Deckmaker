@@ -6,7 +6,6 @@ import { usePathname } from 'next/navigation';
 export default function Navbar() {
   const pathname = usePathname();
 
-  // Fungsi cek apakah link sedang aktif
   const isActive = (path: string) => {
     return pathname === path ? 'active-btn' : '';
   };
@@ -19,7 +18,6 @@ export default function Navbar() {
          </div>
          
          <div className="d-flex gap-2">
-            {/* Ganti <a> dengan <Link> agar loading lebih cepat (SPA) */}
             <Link href="/explore" className={`nav-link-custom ${isActive('/explore')}`}>
               Explore
             </Link>
