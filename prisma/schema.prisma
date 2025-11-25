@@ -1,0 +1,28 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  username  String   @unique
+  fullName  String?  // Opsional: bisa diisi nanti di profile
+  decks     Deck[]
+  createdAt DateTime @default(now())
+}
+
+model Deck {
+  id            Int      @id @default(autoincrement())
+  name          String
+  cards         String   
+  averageElixir Float    @default(0.0)
+  
+  userId        Int
+  user          User     @relation(fields: [userId], references: [id])
+  
+  createdAt     DateTime @default(now())
+}

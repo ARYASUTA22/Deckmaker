@@ -1,42 +1,145 @@
+/* app/globals.css */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
-html,
-body {
-  max-width: 100vw;
-  overflow-x: hidden;
+  --primary-color: #0d6efd;
+  --bg-color: #f0f2f5;
+  --card-bg: #ffffff;
+  --glass-bg: rgba(255, 255, 255, 0.8);
+  --glass-border: rgba(255, 255, 255, 0.3);
 }
 
 body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  background-color: var(--bg-color);
+  font-family: 'Poppins', sans-serif; /* Font lebih modern */
+  color: #333;
 }
 
-* {
-  box-sizing: border-box;
-  padding: 0;
-  margin: 0;
+/* --- MODERN NAVBAR --- */
+.modern-navbar {
+  background: var(--glass-bg);
+  backdrop-filter: blur(10px); /* Efek kaca buram */
+  border-bottom: 1px solid var(--glass-border);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
+  padding: 1rem 0;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
 }
 
-a {
-  color: inherit;
+.nav-link-custom {
+  font-weight: 600;
+  padding: 0.5rem 1.2rem;
+  border-radius: 50px;
+  transition: all 0.3s ease;
   text-decoration: none;
+  color: #555;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
 }
 
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
-  }
+.nav-link-custom:hover {
+  background-color: #e9ecef;
+  color: var(--primary-color);
+  transform: translateY(-2px);
+}
+
+.nav-link-custom.active-btn {
+  background: linear-gradient(45deg, #0d6efd, #0099ff);
+  color: white;
+  box-shadow: 0 4px 15px rgba(13, 110, 253, 0.3);
+}
+
+/* --- CARD SELECTION GRID (Create Page) --- */
+/* Container agar area kartu bisa discroll terpisah */
+.card-scroll-area {
+  height: calc(100vh - 180px); /* Tinggi layar dikurang header */
+  overflow-y: auto;
+  padding: 10px;
+  background: #eef2f7;
+  border-radius: 12px;
+  border: 1px solid #dee2e6;
+}
+
+/* Grid System Custom yang lebih responsif dari Bootstrap col */
+.clash-card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(85px, 1fr)); /* Otomatis isi kolom */
+  gap: 12px;
+}
+
+.clash-card-item {
+  position: relative;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+  border-radius: 8px;
+  overflow: hidden;
+  background: white;
+  border: 2px solid transparent;
+}
+
+.clash-card-item:hover {
+  transform: scale(1.05);
+  z-index: 10;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+.clash-card-item.selected {
+  border-color: #0d6efd;
+  box-shadow: 0 0 0 4px rgba(13, 110, 253, 0.2);
+  transform: scale(0.95);
+}
+
+.clash-card-item img {
+  width: 100%;
+  display: block;
+}
+
+.elixir-badge {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  background: #d63384; /* Warna elixir pink/ungu */
+  color: white;
+  font-size: 0.7rem;
+  font-weight: bold;
+  padding: 2px 6px;
+  border-radius: 50%;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+}
+
+/* --- MODERN BUTTONS --- */
+.btn-modern {
+  border-radius: 50px;
+  font-weight: 600;
+  padding: 0.5rem 1.5rem;
+  transition: all 0.3s;
+  border: none;
+}
+
+.btn-modern-primary {
+  background: linear-gradient(45deg, #0d6efd, #0a58ca);
+  color: white;
+  box-shadow: 0 4px 10px rgba(13, 110, 253, 0.3);
+}
+
+.btn-modern-primary:hover {
+  filter: brightness(1.1);
+  transform: translateY(-2px);
+}
+
+/* Scrollbar Cantik */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #f1f1f1; 
+}
+::-webkit-scrollbar-thumb {
+  background: #c1c1c1; 
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8; 
 }

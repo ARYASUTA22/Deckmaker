@@ -1,36 +1,77 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+DECK MAKER
+Dokumentasi dan Panduan Instalasi
 
-## Getting Started
+DESKRIPSI
+Aplikasi web untuk membuat, menyimpan, dan melihat strategi deck Clash Royale. Aplikasi ini dibangun menggunakan Next.js (App Router), TypeScript, Prisma ORM, dan database SQLite.
 
-First, run the development server:
+TEKNOLOGI
+- Framework: Next.js 14/15
+- Bahasa: TypeScript
+- Database: SQLite
+- ORM: Prisma
+- CSS: Bootstrap 5
+- API: Clash Royale Official API
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+PRASYARAT
+Pastikan perangkat Anda telah terinstal:
+1. Node.js (Versi 18 atau lebih baru)
+2. Git
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+CARA INSTALASI
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+1. Clone Repository
+   Buka terminal atau command prompt, lalu jalankan perintah berikut:
+   git clone https://github.com/username-anda/nama-repo.git
+   cd nama-repo
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+2. Instalasi Dependencies
+   Jalankan perintah berikut untuk mengunduh pustaka yang dibutuhkan:
+   npm install
 
-## Learn More
+3. Konfigurasi Environment Variable (.env)
+   Aplikasi ini memerlukan konfigurasi database dan API Token.
+   - Buat file baru bernama ".env" di direktori utama proyek (root folder).
+   - Salin dan tempel konfigurasi berikut ke dalam file tersebut:
 
-To learn more about Next.js, take a look at the following resources:
+   DATABASE_URL="file:./dev.db"
+   CLASH_TOKEN="masukkan_token_api_anda_disini"
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+   PENTING TENTANG API TOKEN:
+   - Token dapat diperoleh dengan mendaftar di: https://developer.clashroyale.com/
+   - Saat membuat token (Create New Key), Anda wajib memasukkan IP Address publik koneksi internet Anda.
+   - Jika IP Address Anda berubah, Anda harus memperbarui konfigurasi di website developer tersebut agar data kartu dapat dimuat.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+4. Setup Database
+   Jalankan perintah berikut untuk membuat file database SQLite dan menerapkan skema tabel:
+   npx prisma migrate dev --name init
 
-## Deploy on Vercel
+   Selanjutnya, jalankan perintah ini untuk sinkronisasi klien Prisma:
+   npx prisma generate
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+5. Menjalankan Aplikasi
+   Untuk memulai server dalam mode pengembangan:
+   npm run dev
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+   Buka browser dan akses alamat: http://localhost:3000
+
+PEMECAHAN MASALAH UMUM (TROUBLESHOOTING)
+
+1. Error: "SQLITE_BUSY: database is locked"
+   Jika Anda mengalami error ini saat menyimpan deck, itu berarti file database sedang dibuka oleh aplikasi lain. SQLite hanya mengizinkan satu proses menulis dalam satu waktu.
+   Solusi:
+   - Tutup aplikasi pembuka database (seperti DB Browser for SQLite, DBeaver, atau ekstensi VS Code).
+   - Pastikan tidak ada terminal lain yang sedang menjalankan "npx prisma studio".
+   - Restart server development (Ctrl + C, lalu npm run dev lagi).
+
+2. Kartu Tidak Muncul (Loading Terus menerus)
+   Masalah ini biasanya disebabkan oleh Token API yang tidak valid atau IP Address yang diblokir.
+   Solusi:
+   - Cek kembali file .env Anda.
+   - Pastikan IP Address publik Anda saat ini sudah didaftarkan di portal developer Clash Royale.
+
+STRUKTUR PROYEK
+- /app          : Halaman dan routing aplikasi (Next.js App Router)
+- /app/api      : Backend API routes (Auth, Clash API, Database Deck)
+- /prisma       : Skema database dan file database SQLite (dev.db)
+- /components   : Komponen UI (jika ada)
+- /lib          : Konfigurasi inisialisasi Prisma Client
